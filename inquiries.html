@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Inquiry — Lindsay Dev Creative</title>
+  <meta name="description" content="Start a project with Lindsay Dev Creative. Tell us about your brand, your goals, and what you need." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================= */
+    /* FONTS                         */
+    /* ============================= */
+    @font-face {
+      font-family: "PP Editorial New";
+      font-style: normal;
+      font-weight: 400;
+      src: url("fonts/PPEditorialNew-Regular.otf") format("opentype");
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "PP Editorial New";
+      font-style: italic;
+      font-weight: 400;
+      src: url("fonts/PPEditorialNew-Italic.otf") format("opentype");
+      font-display: swap;
+    }
+
+    /* ============================= */
+    /* DESIGN TOKENS                 */
+    /* (base primitives + the layer  */
+    /*  supplied in form-tokens.css) */
+    /* ============================= */
+    :root {
+      /* --- backgrounds --- */
+      --form-bg-page:      #0A0A0A;
+      --form-bg-field:     #1A1A1A;
+      --form-bg-elevated:  #262626;
+      --form-bg-raised:    #424242;
+
+      /* --- borders --- */
+      --form-border-default: #2E2E2E;
+      --form-border-hover:   #555555;
+      --form-border-darkest: var(--form-bg-page);
+      --form-border-darker:  var(--form-bg-field);
+      --form-border-dark:    var(--form-bg-elevated);
+      --form-border-medium:  var(--form-bg-raised);
+
+      /* --- text --- */
+      --form-text-label:       #EDEDED;
+      --form-text-helper:      #B8B8B8;
+      --form-text-placeholder: #989898;
+      --form-text-on-gold:     #0A0A0A;
+      --text-body-light:       #D2D2D2;
+      --text-body-muted:       #797979;
+
+      /* --- gold accents --- */
+      --form-action-primary: #D4A85A;
+      --form-action-hover:   #B6862F;
+      --form-gold-light:     #EACD94;
+
+      /* --- semantic --- */
+      --text-header:         var(--form-text-label);
+      --text-header-italic:  var(--form-action-primary);
+      --text-body:           var(--form-text-helper);
+      --text-body-secondary: var(--form-text-placeholder);
+
+      --btn-primary-bg:        var(--form-action-primary);
+      --btn-primary-bg-hover:  var(--form-gold-light);
+      --btn-primary-bg-active: var(--form-action-hover);
+      --btn-primary-fg:        var(--form-text-on-gold);
+
+      --link-fg:        var(--form-text-helper);
+      --link-fg-hover:  var(--form-action-primary);
+      --link-fg-active: var(--form-action-primary);
+
+      --font-header: "PP Editorial New", Georgia, "Times New Roman", serif;
+      --font-body:   "Inter", system-ui, -apple-system, sans-serif;
+
+      --error: #E0796A;
+    }
+
+    /* ============================= */
+    /* RESET                         */
+    /* ============================= */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { font-size: 100%; -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--form-bg-page);
+      color: var(--text-body);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      /* atmospheric depth: a soft gold glow up top, vignette below */
+      background-image:
+        radial-gradient(120% 60% at 50% -10%, rgba(212,168,90,0.10), rgba(212,168,90,0) 60%),
+        radial-gradient(100% 80% at 50% 120%, rgba(0,0,0,0.6), rgba(0,0,0,0) 50%);
+      background-attachment: fixed;
+    }
+
+    /* ============================= */
+    /* TYPOGRAPHY (rem font sizing)  */
+    /* ============================= */
+    .text-header { font-family: var(--font-header); color: var(--text-header); }
+    .text-header em, .text-header i { font-style: italic; color: var(--text-header-italic); }
+
+    .text-base {
+      font-family: var(--font-body); font-style: normal;
+      font-size: 0.9375rem; font-weight: 400; letter-spacing: 0; line-height: 1.6;
+    }
+    .text-lead {
+      font-family: var(--font-body);
+      font-size: 1.0625rem; font-weight: 400; line-height: 1.525; max-width: 60ch;
+    }
+    .text-copy-small  { font-family: var(--font-body); font-size: 0.8125rem;  line-height: 1.6; }
+    .text-copy-smallest { font-family: var(--font-body); font-size: 0.6875rem; line-height: 1.6; }
+    .text-button {
+      font-family: var(--font-body); font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.2em; line-height: 1; text-align: center; text-transform: uppercase;
+    }
+    @media (max-width: 833px) { .text-base { line-height: 1.7; } }
+
+    /* ============================= */
+    /* LAYOUT                        */
+    /* ============================= */
+    .page {
+      max-width: 46rem;
+      margin: 0 auto;
+      padding: clamp(2.5rem, 6vw, 5.5rem) clamp(1.25rem, 5vw, 3rem) 4rem;
+    }
+
+    .masthead { margin-bottom: clamp(2.5rem, 6vw, 4rem); }
+    .eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.32em;
+      text-transform: uppercase; color: var(--form-action-primary);
+      margin: 0 0 1.25rem;
+    }
+    .eyebrow::before {
+      content: ""; display: inline-block; width: 2rem; height: 1px;
+      background: var(--form-action-primary); vertical-align: middle;
+      margin-right: 0.75rem; opacity: 0.7;
+    }
+    h1.title {
+      font-family: var(--font-header);
+      color: var(--text-header);
+      font-weight: 400;
+      font-size: clamp(2.25rem, 7vw, 3.75rem);
+      line-height: 1.04;
+      letter-spacing: -0.01em;
+      margin: 0 0 1.25rem;
+    }
+    h1.title em { font-style: italic; color: var(--text-header-italic); }
+    .lede { color: var(--text-body-light); margin: 0; max-width: 42ch; }
+
+    /* ============================= */
+    /* FORM STRUCTURE                */
+    /* ============================= */
+    form { margin-top: 1rem; }
+    fieldset {
+      border: 0; padding: 0; margin: 0 0 clamp(2.25rem, 5vw, 3.25rem);
+    }
+    legend {
+      display: flex; align-items: baseline; gap: 0.85rem;
+      width: 100%; padding: 0 0 1.5rem;
+      font-family: var(--font-header);
+      color: var(--text-header);
+      font-size: 1.5rem; line-height: 1;
+    }
+    legend .num {
+      font-family: var(--font-body);
+      font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.18em;
+      color: var(--form-action-primary);
+      border: 1px solid var(--form-border-default);
+      border-radius: 999px;
+      padding: 0.3rem 0.6rem;
+      line-height: 1;
+      transform: translateY(-0.15rem);
+    }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem 1.25rem; }
+    .field { display: flex; flex-direction: column; margin-bottom: 1.25rem; }
+    .field.span-2 { grid-column: 1 / -1; }
+    .grid .field { margin-bottom: 0; }
+
+    label.lbl {
+      font-family: var(--font-body);
+      font-size: 0.8125rem; font-weight: 500; letter-spacing: 0.02em;
+      color: var(--form-text-label);
+      margin-bottom: 0.55rem;
+    }
+    label.lbl .req { color: var(--form-action-primary); margin-left: 0.15rem; }
+    label.lbl .opt {
+      color: var(--text-body-muted); font-weight: 400;
+      font-size: 0.6875rem; letter-spacing: 0.04em; margin-left: 0.4rem;
+      text-transform: uppercase;
+    }
+    .hint {
+      font-size: 0.75rem; color: var(--text-body-secondary);
+      margin: 0.45rem 0 0; line-height: 1.5;
+    }
+
+    /* inputs */
+    input[type="text"], input[type="email"], input[type="tel"],
+    input[type="url"], input[type="date"], select, textarea {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--form-text-label);
+      background: var(--form-bg-field);
+      border: 1px solid var(--form-border-default);
+      border-radius: 4px;
+      padding: 0.85rem 0.95rem;
+      line-height: 1.4;
+      transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+      -webkit-appearance: none; appearance: none;
+    }
+    textarea { resize: vertical; min-height: 7rem; }
+    input::placeholder, textarea::placeholder { color: var(--form-text-placeholder); opacity: 1; }
+
+    input:hover, select:hover, textarea:hover { border-color: var(--form-border-hover); }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--form-action-primary);
+      background: var(--form-bg-elevated);
+      box-shadow: 0 0 0 3px rgba(212,168,90,0.14);
+    }
+
+    /* select chevron */
+    select {
+      background-image:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%23D4A85A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+    select:invalid, select.placeholder-shown { color: var(--form-text-placeholder); }
+    select option { color: var(--form-text-label); background: var(--form-bg-elevated); }
+
+    /* date input dark calendar icon */
+    input[type="date"] { cursor: text; }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(72%) sepia(38%) saturate(560%) hue-rotate(2deg) brightness(92%);
+      cursor: pointer;
+    }
+
+    /* ============================= */
+    /* CHECKBOXES (services)         */
+    /* ============================= */
+    .choice-grid { display: grid; gap: 0.75rem; }
+    .choice {
+      position: relative;
+      display: flex; align-items: flex-start; gap: 0.85rem;
+      padding: 1rem 1.1rem;
+      background: var(--form-bg-field);
+      border: 1px solid var(--form-border-default);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: border-color 160ms ease, background 160ms ease;
+    }
+    .choice:hover { border-color: var(--form-border-hover); }
+    .choice input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .choice .box {
+      flex: 0 0 auto; width: 1.15rem; height: 1.15rem; margin-top: 0.1rem;
+      border: 1px solid var(--form-border-hover);
+      border-radius: 3px; background: var(--form-bg-page);
+      display: grid; place-items: center;
+      transition: border-color 160ms ease, background 160ms ease;
+    }
+    .choice .box::after {
+      content: ""; width: 0.55rem; height: 0.3rem;
+      border-left: 2px solid var(--form-text-on-gold);
+      border-bottom: 2px solid var(--form-text-on-gold);
+      transform: rotate(-45deg) scale(0); transform-origin: center;
+      transition: transform 140ms ease;
+    }
+    .choice input:checked ~ .box { background: var(--form-action-primary); border-color: var(--form-action-primary); }
+    .choice input:checked ~ .box::after { transform: rotate(-45deg) scale(1); }
+    .choice input:checked ~ .choice-text .choice-title { color: var(--form-text-label); }
+    .choice:has(input:checked) { border-color: var(--form-action-primary); background: var(--form-bg-elevated); }
+    .choice input:focus-visible ~ .box { box-shadow: 0 0 0 3px rgba(212,168,90,0.25); }
+    .choice-text { display: flex; flex-direction: column; gap: 0.2rem; }
+    .choice-title { font-size: 0.9375rem; font-weight: 500; color: var(--text-body-light); }
+    .choice-sub { font-size: 0.75rem; color: var(--text-body-secondary); line-height: 1.45; }
+
+    /* inline "other" + flexible reveal */
+    .reveal { margin-top: 0.85rem; display: none; }
+    .reveal.show { display: block; animation: drop 200ms ease; }
+    @keyframes drop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+    /* flexible-timeline toggle */
+    .toggle-line {
+      display: flex; align-items: center; gap: 0.6rem;
+      margin-top: 0.85rem; font-size: 0.8125rem; color: var(--text-body-light);
+      cursor: pointer; user-select: none;
+    }
+    .toggle-line input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .toggle-line .box {
+      width: 1.05rem; height: 1.05rem; border: 1px solid var(--form-border-hover);
+      border-radius: 3px; background: var(--form-bg-page);
+      display: grid; place-items: center;
+    }
+    .toggle-line .box::after {
+      content: ""; width: 0.5rem; height: 0.28rem;
+      border-left: 2px solid var(--form-text-on-gold); border-bottom: 2px solid var(--form-text-on-gold);
+      transform: rotate(-45deg) scale(0); transition: transform 140ms ease;
+    }
+    .toggle-line input:checked ~ .box { background: var(--form-action-primary); border-color: var(--form-action-primary); }
+    .toggle-line input:checked ~ .box::after { transform: rotate(-45deg) scale(1); }
+
+    /* ============================= */
+    /* ERRORS                        */
+    /* ============================= */
+    .field-error {
+      display: none; color: var(--error); font-size: 0.75rem; margin-top: 0.4rem;
+    }
+    .field.invalid .field-error { display: block; }
+    .field.invalid input, .field.invalid select, .field.invalid textarea { border-color: var(--error); }
+    .field.invalid .choice-grid .choice { border-color: var(--error); }
+
+    /* ============================= */
+    /* SUBMIT                        */
+    /* ============================= */
+    .actions {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem;
+      padding-top: 1rem; border-top: 1px solid var(--form-border-default);
+    }
+    button.submit {
+      font-family: var(--font-body);
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--btn-primary-fg);
+      background: var(--btn-primary-bg);
+      border: 0; border-radius: 4px;
+      padding: 1.05rem 2.5rem;
+      cursor: pointer;
+      transition: background 160ms ease, transform 120ms ease, box-shadow 160ms ease;
+      box-shadow: 0 10px 30px -12px rgba(212,168,90,0.5);
+    }
+    button.submit:hover { background: var(--btn-primary-bg-hover); transform: translateY(-1px); }
+    button.submit:active { background: var(--btn-primary-bg-active); transform: translateY(0); }
+    button.submit:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--form-bg-page), 0 0 0 5px var(--form-action-primary); }
+    .actions .note { font-size: 0.75rem; color: var(--text-body-muted); max-width: 26ch; }
+
+    .form-status {
+      display: none; margin-top: 1.5rem; padding: 1rem 1.15rem;
+      border: 1px solid var(--form-action-primary); border-radius: 4px;
+      background: rgba(212,168,90,0.06); color: var(--text-body-light); font-size: 0.8125rem;
+    }
+    .form-status.show { display: block; }
+    .form-status.error { border-color: var(--error); background: rgba(224,121,106,0.07); }
+
+    footer.colophon {
+      margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--form-border-default);
+      font-size: 0.75rem; color: var(--text-body-muted); display: flex;
+      flex-wrap: wrap; gap: 0.5rem 1.25rem; justify-content: space-between;
+    }
+    footer.colophon a { color: var(--link-fg); text-decoration: none; }
+    footer.colophon a:hover { color: var(--link-fg-hover); }
+
+    /* ============================= */
+    /* RESPONSIVE                    */
+    /* ============================= */
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; gap: 0; }
+      .grid .field { margin-bottom: 1.25rem; }
+      legend { font-size: 1.3rem; }
+      .actions { flex-direction: column; align-items: stretch; }
+      button.submit { width: 100%; }
+      .actions .note { max-width: none; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="masthead">
+      <p class="eyebrow">Project Inquiry</p>
+      <h1 class="title">Let&rsquo;s build something <em>worth remembering.</em></h1>
+      <p class="lede text-lead">Tell us about you and your vision. The more you share, the sharper our first conversation will be.</p>
+    </header>
+
+    <form id="inquiryForm" novalidate>
+      <!-- 1. ABOUT YOU -->
+      <fieldset>
+        <legend><span class="num">01</span> About you</legend>
+        <div class="grid">
+          <div class="field">
+            <label class="lbl" for="firstName">First name <span class="req">*</span></label>
+            <input type="text" id="firstName" name="firstName" autocomplete="given-name" required />
+            <span class="field-error">Please enter your first name.</span>
+          </div>
+          <div class="field">
+            <label class="lbl" for="lastName">Last name <span class="req">*</span></label>
+            <input type="text" id="lastName" name="lastName" autocomplete="family-name" required />
+            <span class="field-error">Please enter your last name.</span>
+          </div>
+          <div class="field">
+            <label class="lbl" for="email">Email <span class="req">*</span></label>
+            <input type="email" id="email" name="email" autocomplete="email" placeholder="you@brand.com" required />
+            <span class="field-error">Please enter a valid email address.</span>
+          </div>
+          <div class="field">
+            <label class="lbl" for="phone">Phone number <span class="opt">Optional</span></label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(555) 000-0000" />
+          </div>
+          <div class="field">
+            <label class="lbl" for="contactMethod">Preferred method of contact <span class="req">*</span></label>
+            <select id="contactMethod" name="contactMethod" class="placeholder-shown" required>
+              <option value="" disabled selected hidden>Select one</option>
+              <option value="Email">Email</option>
+              <option value="Phone call">Phone call</option>
+              <option value="Text message">Text message</option>
+            </select>
+            <span class="field-error">Please choose how you&rsquo;d like to be contacted.</span>
+          </div>
+          <div class="field">
+            <label class="lbl" for="company">Company / Brand name <span class="req">*</span></label>
+            <input type="text" id="company" name="company" autocomplete="organization" required />
+            <span class="field-error">Please enter your company or brand name.</span>
+          </div>
+          <div class="field span-2">
+            <label class="lbl" for="website">Website <span class="opt">Optional</span></label>
+            <input type="url" id="website" name="website" autocomplete="url" placeholder="https://" />
+            <span class="hint">Have an existing site or socials? Drop the link.</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 2. THE PROJECT -->
+      <fieldset>
+        <legend><span class="num">02</span> The project</legend>
+
+        <div class="field">
+          <label class="lbl" for="projectDetails">Project details <span class="req">*</span></label>
+          <textarea id="projectDetails" name="projectDetails" placeholder="What are we building together? Give us the shape of it." required></textarea>
+          <span class="field-error">Please tell us a little about the project.</span>
+        </div>
+
+        <div class="field" id="serviceField">
+          <label class="lbl">Service needed <span class="req">*</span></label>
+          <span class="hint" style="margin-top:0;margin-bottom:0.7rem;">Select all that apply.</span>
+          <div class="choice-grid">
+            <label class="choice">
+              <input type="checkbox" name="service" value="Full Brand Identity (logo design, color palette & fonts)" data-premium="true" />
+              <span class="box" aria-hidden="true"></span>
+              <span class="choice-text">
+                <span class="choice-title">Full Brand Identity</span>
+                <span class="choice-sub">Logo design, color palette &amp; fonts</span>
+              </span>
+            </label>
+            <label class="choice">
+              <input type="checkbox" name="service" value="Website Development" data-premium="true" />
+              <span class="box" aria-hidden="true"></span>
+              <span class="choice-text">
+                <span class="choice-title">Website Development</span>
+                <span class="choice-sub">Design &amp; build of your site</span>
+              </span>
+            </label>
+            <label class="choice">
+              <input type="checkbox" name="service" value="Other" id="serviceOther" />
+              <span class="box" aria-hidden="true"></span>
+              <span class="choice-text">
+                <span class="choice-title">Other</span>
+                <span class="choice-sub">Something else in mind? Tell us below.</span>
+              </span>
+            </label>
+          </div>
+          <div class="reveal" id="serviceOtherReveal">
+            <input type="text" id="serviceOtherText" name="serviceOtherText" placeholder="Describe the service you need" />
+          </div>
+          <span class="field-error">Please select at least one service.</span>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="projectDescription">Project description <span class="req">*</span></label>
+          <textarea id="projectDescription" name="projectDescription" placeholder="Share your vision and goals — the feeling, the audience, where you want to go." required></textarea>
+          <span class="field-error">Please share your vision or goals.</span>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="deliverables">Deliverables <span class="req">*</span></label>
+          <textarea id="deliverables" name="deliverables" placeholder="Exactly what you need handed over at the end — e.g. logo files, brand guide, live website, source files." required></textarea>
+          <span class="field-error">Please list what you need delivered.</span>
+        </div>
+      </fieldset>
+
+      <!-- 3. SCOPE & TIMING -->
+      <fieldset>
+        <legend><span class="num">03</span> Scope &amp; timing</legend>
+        <div class="grid">
+          <div class="field">
+            <label class="lbl" for="deadline">Target deadline <span class="req">*</span></label>
+            <input type="date" id="deadline" name="deadline" required />
+            <label class="toggle-line">
+              <input type="checkbox" id="flexible" name="flexible" value="Flexible timeline" />
+              <span class="box" aria-hidden="true"></span>
+              <span>My timeline is flexible</span>
+            </label>
+            <span class="field-error">Please pick a target date or mark your timeline flexible.</span>
+          </div>
+          <div class="field">
+            <label class="lbl" for="budget">Budget range <span class="opt">Optional</span></label>
+            <select id="budget" name="budget" class="placeholder-shown">
+              <option value="" disabled selected hidden>Select a range</option>
+              <option value="Under $1,000" data-tier="entry">Under $1,000</option>
+              <option value="$1,000 – $3,000">$1,000 – $3,000</option>
+              <option value="$3,000 – $5,000">$3,000 – $5,000</option>
+              <option value="$5,000 – $10,000">$5,000 – $10,000</option>
+              <option value="$10,000+">$10,000+</option>
+            </select>
+            <span class="hint" id="budgetHint" style="display:none;">For brand identity &amp; website builds, projects start at $1,000.</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 4. INSPIRATION -->
+      <fieldset>
+        <legend><span class="num">04</span> Inspiration &amp; referral</legend>
+        <div class="field">
+          <label class="lbl" for="inspiration">Inspiration links <span class="opt">Optional</span></label>
+          <textarea id="inspiration" name="inspiration" style="min-height:5.5rem;" placeholder="Mood boards, competitors, a Pinterest board — paste any URLs here."></textarea>
+        </div>
+        <div class="field">
+          <label class="lbl" for="referral">How did you hear about us? <span class="opt">Optional</span></label>
+          <select id="referral" name="referral" class="placeholder-shown">
+            <option value="" disabled selected hidden>Select one</option>
+            <option value="Referral">Referral</option>
+            <option value="Social media">Social media</option>
+            <option value="Online search">Online search</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="reveal" id="referralOtherReveal">
+            <input type="text" id="referralOtherText" name="referralOtherText" placeholder="Where did you find us?" />
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" class="submit">Send Inquiry</button>
+        <p class="note">This opens your email app with the details ready to send.</p>
+      </div>
+      <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+    </form>
+
+    <footer class="colophon">
+      <span>Lindsay Dev Creative</span>
+      <a href="mailto:lindsay@lindsaydevcreative.com">lindsay@lindsaydevcreative.com</a>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+      var RECIPIENT = "lindsay@lindsaydevcreative.com";
+      var form = document.getElementById("inquiryForm");
+      var status = document.getElementById("formStatus");
+
+      /* keep selects showing placeholder color until a real value is chosen */
+      function syncSelectColor(sel) {
+        if (sel.value === "") sel.classList.add("placeholder-shown");
+        else sel.classList.remove("placeholder-shown");
+      }
+      Array.prototype.forEach.call(document.querySelectorAll("select"), function (sel) {
+        syncSelectColor(sel);
+        sel.addEventListener("change", function () { syncSelectColor(sel); });
+      });
+
+      /* --- "Other" service text reveal --- */
+      var serviceOther = document.getElementById("serviceOther");
+      var serviceOtherReveal = document.getElementById("serviceOtherReveal");
+      serviceOther.addEventListener("change", function () {
+        serviceOtherReveal.classList.toggle("show", serviceOther.checked);
+        if (!serviceOther.checked) document.getElementById("serviceOtherText").value = "";
+      });
+
+      /* --- referral "Other" reveal --- */
+      var referral = document.getElementById("referral");
+      var referralOtherReveal = document.getElementById("referralOtherReveal");
+      referral.addEventListener("change", function () {
+        referralOtherReveal.classList.toggle("show", referral.value === "Other");
+        if (referral.value !== "Other") document.getElementById("referralOtherText").value = "";
+      });
+
+      /* --- hide "Under $1,000" when a premium service is selected --- */
+      var premiumInputs = document.querySelectorAll('input[data-premium="true"]');
+      var budget = document.getElementById("budget");
+      var entryOption = budget.querySelector('option[data-tier="entry"]');
+      var budgetHint = document.getElementById("budgetHint");
+      function refreshBudget() {
+        var premiumSelected = Array.prototype.some.call(premiumInputs, function (i) { return i.checked; });
+        entryOption.hidden = premiumSelected;
+        entryOption.disabled = premiumSelected;
+        budgetHint.style.display = premiumSelected ? "block" : "none";
+        if (premiumSelected && budget.value === "Under $1,000") {
+          budget.value = "";
+          syncSelectColor(budget);
+        }
+      }
+      Array.prototype.forEach.call(premiumInputs, function (i) {
+        i.addEventListener("change", refreshBudget);
+      });
+
+      /* --- flexible timeline toggles date requirement --- */
+      var flexible = document.getElementById("flexible");
+      var deadline = document.getElementById("deadline");
+      flexible.addEventListener("change", function () {
+        deadline.required = !flexible.checked;
+        deadline.disabled = flexible.checked;
+        if (flexible.checked) clearError(deadline.closest(".field"));
+      });
+
+      /* --- validation helpers --- */
+      function fieldOf(el) { return el.closest(".field"); }
+      function showError(field) { if (field) field.classList.add("invalid"); }
+      function clearError(field) { if (field) field.classList.remove("invalid"); }
+
+      document.querySelectorAll("input, select, textarea").forEach(function (el) {
+        el.addEventListener("input", function () { clearError(fieldOf(el)); });
+        el.addEventListener("change", function () { clearError(fieldOf(el)); });
+      });
+
+      function getServices() {
+        return Array.prototype.filter.call(
+          document.querySelectorAll('input[name="service"]'),
+          function (i) { return i.checked; }
+        ).map(function (i) {
+          if (i.value === "Other") {
+            var t = document.getElementById("serviceOtherText").value.trim();
+            return t ? "Other: " + t : "Other";
+          }
+          return i.value;
+        });
+      }
+
+      function validate() {
+        var ok = true;
+        var firstBad = null;
+
+        // simple required fields
+        var required = ["firstName", "lastName", "email", "contactMethod",
+                        "company", "projectDetails", "projectDescription", "deliverables"];
+        required.forEach(function (id) {
+          var el = document.getElementById(id);
+          var val = (el.value || "").trim();
+          var valid = val !== "";
+          if (id === "email") valid = valid && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+          if (!valid) { showError(fieldOf(el)); ok = false; firstBad = firstBad || el; }
+        });
+
+        // services: at least one
+        var serviceField = document.getElementById("serviceField");
+        if (getServices().length === 0) {
+          showError(serviceField); ok = false; firstBad = firstBad || serviceField;
+        }
+
+        // deadline required unless flexible
+        if (!flexible.checked && !deadline.value) {
+          showError(fieldOf(deadline)); ok = false; firstBad = firstBad || deadline;
+        }
+
+        if (firstBad) firstBad.scrollIntoView({ behavior: "smooth", block: "center" });
+        return ok;
+      }
+
+      function line(label, value) {
+        return value && String(value).trim() ? label + ": " + value + "\n" : "";
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        status.classList.remove("show", "error");
+
+        if (!validate()) {
+          status.textContent = "Please complete the highlighted fields above.";
+          status.classList.add("show", "error");
+          return;
+        }
+
+        var g = function (id) { return document.getElementById(id).value.trim(); };
+        var fullName = g("firstName") + " " + g("lastName");
+        var services = getServices().join(", ");
+        var timeline = flexible.checked
+          ? "Flexible" + (deadline.value ? " (ideally " + deadline.value + ")" : "")
+          : deadline.value;
+        var referralVal = referral.value === "Other"
+          ? "Other: " + document.getElementById("referralOtherText").value.trim()
+          : referral.value;
+
+        var body =
+          "NEW PROJECT INQUIRY\n" +
+          "======================\n\n" +
+          "— About —\n" +
+          line("Name", fullName) +
+          line("Email", g("email")) +
+          line("Phone", g("phone")) +
+          line("Preferred contact", g("contactMethod")) +
+          line("Company / Brand", g("company")) +
+          line("Website", g("website")) +
+          "\n— Project —\n" +
+          line("Services", services) +
+          line("Project details", g("projectDetails")) +
+          line("Description / vision", g("projectDescription")) +
+          line("Deliverables", g("deliverables")) +
+          "\n— Scope & timing —\n" +
+          line("Target deadline", timeline) +
+          line("Budget", budget.value) +
+          "\n— Inspiration & referral —\n" +
+          line("Inspiration links", g("inspiration")) +
+          line("Heard about us via", referralVal);
+
+        var subject = "New Project Inquiry — " + fullName +
+                      (g("company") ? " (" + g("company") + ")" : "");
+        var href = "mailto:" + RECIPIENT +
+                   "?subject=" + encodeURIComponent(subject) +
+                   "&body=" + encodeURIComponent(body);
+
+        window.location.href = href;
+
+        status.textContent = "Opening your email app… if nothing happens, email us directly at " + RECIPIENT + ".";
+        status.classList.add("show");
+      });
+    })();
+  </script>
+</body>
+</html>
