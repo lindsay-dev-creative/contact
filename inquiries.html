@@ -69,6 +69,10 @@
     body {
       margin: 0;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       background: var(--brand-primary);
       color: var(--text-body);
       font-family: var(--font-body);
@@ -81,9 +85,9 @@
     /* LAYOUT                        */
     /* ============================= */
     .page {
+      width: 100%;
       max-width: 728px; /* desktop content column */
-      margin: 0 auto;
-      padding: 96px, 24px, 48px, 24px;
+      padding: 0 20px 48px;
     }
 
     /* logo block — pt-120 pb-40 in Figma */
