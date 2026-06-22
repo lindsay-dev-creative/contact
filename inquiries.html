@@ -81,7 +81,7 @@
     /* LAYOUT                        */
     /* ============================= */
     .page {
-      max-width: 43.75rem; /* 700px content column */
+      max-width: 728px; /* desktop content column */
       margin: 0 auto;
       padding: 0 clamp(1.25rem, 5vw, 5rem) clamp(3rem, 8vw, 6.25rem);
     }
@@ -146,7 +146,7 @@
     label.lbl .req, legend.lbl .req { color: var(--text-asterisk); }
     label.lbl .opt, legend.lbl .opt {
       color: var(--text-muted); font-weight: 400;
-      font-size: 0.625rem; letter-spacing: 0.04em; text-transform: uppercase;
+      font-size: 11px; letter-spacing: 0.02em; text-transform: lowercase;
     }
     .hint {
       font-size: 0.75rem; color: var(--text-muted);
@@ -190,6 +190,11 @@
       background-position: right 1rem center;
       padding-right: 2.5rem;
       cursor: pointer;
+    }
+    /* Preferred method of contact uses a light (#EDEDED) chevron */
+    select#contactMethod {
+      background-image:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%23EDEDED' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
     }
     select:invalid, select.placeholder-shown { color: var(--text-muted); }
     select option { color: var(--text-label); background: var(--bg-elevated); }
@@ -316,6 +321,11 @@
     /* ============================= */
     /* RESPONSIVE                    */
     /* ============================= */
+    /* tablet — narrower content column */
+    @media (max-width: 834px) {
+      .page { max-width: 649px; }
+    }
+    /* mobile — every field stacks to a single column */
     @media (max-width: 600px) {
       .row { grid-template-columns: 1fr; }
     }
