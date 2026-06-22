@@ -247,6 +247,10 @@
     .reveal.show { display: block; animation: drop 200ms ease; }
     @keyframes drop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 
+    /* conditional follow-up fields (referral name / social platform) */
+    .field.hide { display: none; }
+    #referralNameReveal, #socialPlatformReveal { animation: drop 200ms ease; }
+
     /* flexible-timeline toggle */
     .toggle-line {
       display: flex; align-items: center; gap: 0.625rem;
@@ -398,7 +402,7 @@
           <span class="field-error">Please enter a valid email address.</span>
         </div>
         <div class="field">
-          <label class="lbl" for="phone">Phone number</label>
+          <label class="lbl" for="phone">Phone number <span class="opt">(not required)</span></label>
           <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(555) 000-0000" />
         </div>
       </div>
@@ -424,14 +428,14 @@
 
       <!-- website -->
       <div class="field">
-        <label class="lbl" for="website">Website</label>
+        <label class="lbl" for="website">Website <span class="opt">(not required)</span></label>
         <span class="hint">Have an existing website? Drop the link.</span>
         <input type="url" id="website" name="website" autocomplete="url" placeholder="https://" />
       </div>
 
       <!-- social media -->
       <div class="field">
-        <label class="lbl" for="social">Social Media</label>
+        <label class="lbl" for="social">Social Media <span class="opt">(not required)</span></label>
         <span class="hint">Have active profiles? Drop a link.</span>
         <input type="url" id="social" name="social" placeholder="https://" />
       </div>
@@ -536,9 +540,18 @@
           <option value="Online search">Online search</option>
           <option value="Other">Other</option>
         </select>
-        <div class="reveal" id="referralOtherReveal">
-          <input type="text" id="referralOtherText" name="referralOtherText" placeholder="Where did you find us?" />
-        </div>
+      </div>
+
+      <!-- conditional: shown when "Referral" is chosen above -->
+      <div class="field hide" id="referralNameReveal">
+        <label class="lbl" for="referralName">Referral name <span class="opt">(not required)</span></label>
+        <input type="text" id="referralName" name="referralName" placeholder="Who can we thank for the referral?" />
+      </div>
+
+      <!-- conditional: shown when "Social media" is chosen above -->
+      <div class="field hide" id="socialPlatformReveal">
+        <label class="lbl" for="socialPlatform">Social media platform <span class="opt">(not required)</span></label>
+        <input type="text" id="socialPlatform" name="socialPlatform" placeholder="Which platform?" />
       </div>
 
       <!-- tail: submit + colophon -->
@@ -581,12 +594,17 @@
         if (!serviceOther.checked) document.getElementById("serviceOtherText").value = "";
       });
 
-      /* --- referral "Other" reveal --- */
+      /* --- "How did you hear about us?" conditional questions --- */
       var referral = document.getElementById("referral");
-      var referralOtherReveal = document.getElementById("referralOtherReveal");
+      var referralNameReveal = document.getElementById("referralNameReveal");
+      var socialPlatformReveal = document.getElementById("socialPlatformReveal");
       referral.addEventListener("change", function () {
-        referralOtherReveal.classList.toggle("show", referral.value === "Other");
-        if (referral.value !== "Other") document.getElementById("referralOtherText").value = "";
+        var isReferral = referral.value === "Referral";
+        var isSocial = referral.value === "Social media";
+        referralNameReveal.classList.toggle("hide", !isReferral);
+        socialPlatformReveal.classList.toggle("hide", !isSocial);
+        if (!isReferral) document.getElementById("referralName").value = "";
+        if (!isSocial) document.getElementById("socialPlatform").value = "";
       });
 
       /* --- hide "Under $1,000" when a premium service is selected --- */
@@ -690,9 +708,7 @@
         var timeline = flexible.checked
           ? "Flexible" + (deadline.value ? " (ideally " + deadline.value + ")" : "")
           : deadline.value;
-        var referralVal = referral.value === "Other"
-          ? "Other: " + document.getElementById("referralOtherText").value.trim()
-          : referral.value;
+        var referralVal = referral.value;
 
         var body =
           "NEW PROJECT INQUIRY\n" +
@@ -715,7 +731,9 @@
           line("Budget", budget.value) +
           "\n— Inspiration & referral —\n" +
           line("Inspiration links", g("inspiration")) +
-          line("Heard about us via", referralVal);
+          line("Heard about us via", referralVal) +
+          line("Referral name", g("referralName")) +
+          line("Social media platform", g("socialPlatform"));
 
         var subject = "New Project Inquiry — " + fullName +
                       (g("company") ? " (" + g("company") + ")" : "");
