@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Project Inquiry — Lindsay Dev Creative</title>
-  <meta name="description" content="Start a project with Lindsay Dev Creative. Tell us about your brand, your goals, and what you need." />
+  <title>Inquiries — Lindsay Dev Creative</title>
+  <meta name="description" content="Start a project with Lindsay Dev Creative. Share your goals and vision, the more I know, the better the outcome." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -29,51 +29,31 @@
 
     /* ============================= */
     /* DESIGN TOKENS                 */
-    /* (base primitives + the layer  */
-    /*  supplied in form-tokens.css) */
+    /* (LDC brand — mirrors Figma    */
+    /*  LDC_2026_WD_inquiries-v01)   */
     /* ============================= */
     :root {
       /* --- backgrounds --- */
-      --form-bg-page:      #0A0A0A;
-      --form-bg-field:     #1A1A1A;
-      --form-bg-elevated:  #262626;
-      --form-bg-raised:    #424242;
+      --brand-primary:     #0A0A0A; /* page */
+      --bg-field:          #1A1A1A; /* background/secondary */
+      --bg-elevated:       #262626;
 
       /* --- borders --- */
-      --form-border-default: #2E2E2E;
-      --form-border-hover:   #555555;
-      --form-border-darkest: var(--form-bg-page);
-      --form-border-darker:  var(--form-bg-field);
-      --form-border-dark:    var(--form-bg-elevated);
-      --form-border-medium:  var(--form-bg-raised);
+      --border-default:    #2E2E2E; /* border/primary */
+      --border-hover:      #555555;
+      --border-checkbox:   #7A7A7A; /* text/secondary */
 
       /* --- text --- */
-      --form-text-label:       #EDEDED;
-      --form-text-helper:      #B8B8B8;
-      --form-text-placeholder: #989898;
-      --form-text-on-gold:     #0A0A0A;
-      --text-body-light:       #D2D2D2;
-      --text-body-muted:       #797979;
+      --text-label:        #EDEDED; /* brand/secondary */
+      --text-body:         #B8B8B8; /* text/primary */
+      --text-emphasis:     #E7E7E7; /* brand/primary/100 */
+      --text-muted:        #7A7A7A; /* text/secondary */
+      --text-asterisk:     #FAFAFA; /* old/secondary */
 
       /* --- gold accents --- */
-      --form-action-primary: #D4A85A;
-      --form-action-hover:   #B6862F;
-      --form-gold-light:     #EACD94;
-
-      /* --- semantic --- */
-      --text-header:         var(--form-text-label);
-      --text-header-italic:  var(--form-action-primary);
-      --text-body:           var(--form-text-helper);
-      --text-body-secondary: var(--form-text-placeholder);
-
-      --btn-primary-bg:        var(--form-action-primary);
-      --btn-primary-bg-hover:  var(--form-gold-light);
-      --btn-primary-bg-active: var(--form-action-hover);
-      --btn-primary-fg:        var(--form-text-on-gold);
-
-      --link-fg:        var(--form-text-helper);
-      --link-fg-hover:  var(--form-action-primary);
-      --link-fg-active: var(--form-action-primary);
+      --gold:              #D4A85A; /* brand/quarterary */
+      --gold-light:        #EACD94;
+      --gold-active:       #B6862F;
 
       --font-header: "PP Editorial New", Georgia, "Times New Roman", serif;
       --font-body:   "Inter", system-ui, -apple-system, sans-serif;
@@ -89,119 +69,88 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: var(--form-bg-page);
+      background: var(--brand-primary);
       color: var(--text-body);
       font-family: var(--font-body);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
-      /* atmospheric depth: a soft gold glow up top, vignette below */
-      background-image:
-        radial-gradient(120% 60% at 50% -10%, rgba(212,168,90,0.10), rgba(212,168,90,0) 60%),
-        radial-gradient(100% 80% at 50% 120%, rgba(0,0,0,0.6), rgba(0,0,0,0) 50%);
-      background-attachment: fixed;
     }
-
-    /* ============================= */
-    /* TYPOGRAPHY (rem font sizing)  */
-    /* ============================= */
-    .text-header { font-family: var(--font-header); color: var(--text-header); }
-    .text-header em, .text-header i { font-style: italic; color: var(--text-header-italic); }
-
-    .text-base {
-      font-family: var(--font-body); font-style: normal;
-      font-size: 0.9375rem; font-weight: 400; letter-spacing: 0; line-height: 1.6;
-    }
-    .text-lead {
-      font-family: var(--font-body);
-      font-size: 1.0625rem; font-weight: 400; line-height: 1.525; max-width: 60ch;
-    }
-    .text-copy-small  { font-family: var(--font-body); font-size: 0.8125rem;  line-height: 1.6; }
-    .text-copy-smallest { font-family: var(--font-body); font-size: 0.6875rem; line-height: 1.6; }
-    .text-button {
-      font-family: var(--font-body); font-size: 0.75rem; font-weight: 600;
-      letter-spacing: 0.2em; line-height: 1; text-align: center; text-transform: uppercase;
-    }
-    @media (max-width: 833px) { .text-base { line-height: 1.7; } }
 
     /* ============================= */
     /* LAYOUT                        */
     /* ============================= */
     .page {
-      max-width: 46rem;
+      max-width: 43.75rem; /* 700px content column */
       margin: 0 auto;
-      padding: clamp(2.5rem, 6vw, 5.5rem) clamp(1.25rem, 5vw, 3rem) 4rem;
+      padding: 0 clamp(1.25rem, 5vw, 5rem) clamp(3rem, 8vw, 6.25rem);
     }
 
-    .masthead { margin-bottom: clamp(2.5rem, 6vw, 4rem); }
-    .eyebrow {
-      font-family: var(--font-body);
-      font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.32em;
-      text-transform: uppercase; color: var(--form-action-primary);
-      margin: 0 0 1.25rem;
+    /* logo block — pt-120 pb-40 in Figma */
+    .logo-block {
+      display: flex;
+      align-items: center;
+      padding: clamp(3.5rem, 9vw, 7.5rem) 0 2.5rem;
     }
-    .eyebrow::before {
-      content: ""; display: inline-block; width: 2rem; height: 1px;
-      background: var(--form-action-primary); vertical-align: middle;
-      margin-right: 0.75rem; opacity: 0.7;
+    .logo {
+      width: 4rem; height: 4rem;
+      color: var(--text-label);
+    }
+    .logo svg { display: block; width: 100%; height: 100%; }
+
+    /* ============================= */
+    /* MASTHEAD                      */
+    /* ============================= */
+    .masthead {
+      display: flex;
+      flex-direction: column;
+      gap: 1.375rem; /* 22px */
+      padding-bottom: 2.5rem;
     }
     h1.title {
       font-family: var(--font-header);
-      color: var(--text-header);
       font-weight: 400;
-      font-size: clamp(2.25rem, 7vw, 3.75rem);
-      line-height: 1.04;
+      color: var(--gold);
+      font-size: clamp(2.5rem, 7vw, 3.625rem); /* 58px */
+      line-height: 1.3;
       letter-spacing: -0.01em;
-      margin: 0 0 1.25rem;
+      margin: 0;
     }
-    h1.title em { font-style: italic; color: var(--text-header-italic); }
-    .lede { color: var(--text-body-light); margin: 0; max-width: 42ch; }
+    .lede {
+      font-family: var(--font-body);
+      font-size: 1.0625rem; /* 17px */
+      line-height: 1.53;
+      color: var(--text-body);
+      max-width: 35rem; /* 560px */
+      margin: 0;
+    }
+    .lede strong { font-weight: 600; color: var(--text-emphasis); }
 
     /* ============================= */
     /* FORM STRUCTURE                */
     /* ============================= */
-    form { margin-top: 1rem; }
-    fieldset {
-      border: 0; padding: 0; margin: 0 0 clamp(2.25rem, 5vw, 3.25rem);
-    }
-    legend {
-      display: flex; align-items: baseline; gap: 0.85rem;
-      width: 100%; padding: 0 0 1.5rem;
-      font-family: var(--font-header);
-      color: var(--text-header);
-      font-size: 1.5rem; line-height: 1;
-    }
-    legend .num {
-      font-family: var(--font-body);
-      font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.18em;
-      color: var(--form-action-primary);
-      border: 1px solid var(--form-border-default);
-      border-radius: 999px;
-      padding: 0.3rem 0.6rem;
-      line-height: 1;
-      transform: translateY(-0.15rem);
-    }
+    form { display: flex; flex-direction: column; gap: 1.25rem; } /* 20px between rows */
+    fieldset { border: 0; padding: 0; margin: 0; }
 
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem 1.25rem; }
-    .field { display: flex; flex-direction: column; margin-bottom: 1.25rem; }
-    .field.span-2 { grid-column: 1 / -1; }
-    .grid .field { margin-bottom: 0; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .field { display: flex; flex-direction: column; gap: 0.5625rem; } /* 9px label→input */
 
-    label.lbl {
+    label.lbl, legend.lbl {
+      display: flex; align-items: center; gap: 0.3125rem;
       font-family: var(--font-body);
-      font-size: 0.8125rem; font-weight: 500; letter-spacing: 0.02em;
-      color: var(--form-text-label);
-      margin-bottom: 0.55rem;
+      font-size: 0.8125rem; /* 13px */
+      font-weight: 500;
+      color: var(--text-label);
+      padding: 0;
     }
-    label.lbl .req { color: var(--form-action-primary); margin-left: 0.15rem; }
-    label.lbl .opt {
-      color: var(--text-body-muted); font-weight: 400;
-      font-size: 0.6875rem; letter-spacing: 0.04em; margin-left: 0.4rem;
-      text-transform: uppercase;
+    label.lbl .req, legend.lbl .req { color: var(--text-asterisk); }
+    label.lbl .opt, legend.lbl .opt {
+      color: var(--text-muted); font-weight: 400;
+      font-size: 0.625rem; letter-spacing: 0.04em; text-transform: uppercase;
     }
     .hint {
-      font-size: 0.75rem; color: var(--text-body-secondary);
-      margin: 0.45rem 0 0; line-height: 1.5;
+      font-size: 0.75rem; color: var(--text-muted);
+      margin: 0; line-height: 1.5;
     }
 
     /* inputs */
@@ -209,24 +158,27 @@
     input[type="url"], input[type="date"], select, textarea {
       width: 100%;
       font-family: var(--font-body);
-      font-size: 0.9375rem;
-      color: var(--form-text-label);
-      background: var(--form-bg-field);
-      border: 1px solid var(--form-border-default);
+      font-size: 0.9375rem; /* 15px */
+      color: var(--text-label);
+      background: var(--bg-field);
+      border: 1px solid var(--border-default);
       border-radius: 4px;
-      padding: 0.85rem 0.95rem;
+      padding: 0.8125rem 0.9375rem; /* 13px 15px */
       line-height: 1.4;
       transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
       -webkit-appearance: none; appearance: none;
     }
-    textarea { resize: vertical; min-height: 7rem; }
-    input::placeholder, textarea::placeholder { color: var(--form-text-placeholder); opacity: 1; }
+    textarea { resize: vertical; line-height: 1.5; }
+    textarea.t-details { min-height: 6.5rem; }      /* 104px */
+    textarea.t-large   { min-height: 7rem; }        /* 112px */
+    textarea.t-small   { min-height: 5.625rem; }    /* 90px */
+    input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 1; }
 
-    input:hover, select:hover, textarea:hover { border-color: var(--form-border-hover); }
+    input:hover, select:hover, textarea:hover { border-color: var(--border-hover); }
     input:focus, select:focus, textarea:focus {
       outline: none;
-      border-color: var(--form-action-primary);
-      background: var(--form-bg-elevated);
+      border-color: var(--gold);
+      background: var(--bg-elevated);
       box-shadow: 0 0 0 3px rgba(212,168,90,0.14);
     }
 
@@ -239,8 +191,8 @@
       padding-right: 2.5rem;
       cursor: pointer;
     }
-    select:invalid, select.placeholder-shown { color: var(--form-text-placeholder); }
-    select option { color: var(--form-text-label); background: var(--form-bg-elevated); }
+    select:invalid, select.placeholder-shown { color: var(--text-muted); }
+    select option { color: var(--text-label); background: var(--bg-elevated); }
 
     /* date input dark calendar icon */
     input[type="date"] { cursor: text; }
@@ -250,67 +202,64 @@
     }
 
     /* ============================= */
-    /* CHECKBOXES (services)         */
+    /* SERVICE CHECKBOXES (inline)   */
     /* ============================= */
-    .choice-grid { display: grid; gap: 0.75rem; }
+    .choice-wrap {
+      display: flex; flex-wrap: wrap;
+      gap: 1rem; /* 16px */
+      align-items: flex-start;
+    }
     .choice {
       position: relative;
-      display: flex; align-items: flex-start; gap: 0.85rem;
-      padding: 1rem 1.1rem;
-      background: var(--form-bg-field);
-      border: 1px solid var(--form-border-default);
-      border-radius: 4px;
+      display: flex; align-items: center; gap: 0.8125rem; /* 13px */
+      max-width: 16.5rem; /* 264px */
+      padding: 0.25rem 0;
       cursor: pointer;
-      transition: border-color 160ms ease, background 160ms ease;
     }
-    .choice:hover { border-color: var(--form-border-hover); }
     .choice input { position: absolute; opacity: 0; width: 0; height: 0; }
     .choice .box {
-      flex: 0 0 auto; width: 1.15rem; height: 1.15rem; margin-top: 0.1rem;
-      border: 1px solid var(--form-border-hover);
-      border-radius: 3px; background: var(--form-bg-page);
+      flex: 0 0 auto; width: 1.125rem; height: 1.125rem; /* 18px */
+      border: 1px solid var(--border-checkbox);
+      border-radius: 3px; background: var(--brand-primary);
       display: grid; place-items: center;
       transition: border-color 160ms ease, background 160ms ease;
     }
     .choice .box::after {
-      content: ""; width: 0.55rem; height: 0.3rem;
-      border-left: 2px solid var(--form-text-on-gold);
-      border-bottom: 2px solid var(--form-text-on-gold);
+      content: ""; width: 0.5rem; height: 0.28rem;
+      border-left: 2px solid var(--brand-primary);
+      border-bottom: 2px solid var(--brand-primary);
       transform: rotate(-45deg) scale(0); transform-origin: center;
       transition: transform 140ms ease;
     }
-    .choice input:checked ~ .box { background: var(--form-action-primary); border-color: var(--form-action-primary); }
+    .choice input:checked ~ .box { background: var(--gold); border-color: var(--gold); }
     .choice input:checked ~ .box::after { transform: rotate(-45deg) scale(1); }
-    .choice input:checked ~ .choice-text .choice-title { color: var(--form-text-label); }
-    .choice:has(input:checked) { border-color: var(--form-action-primary); background: var(--form-bg-elevated); }
+    .choice-title { font-size: 0.9375rem; font-weight: 500; color: var(--text-body); }
+    .choice input:checked ~ .choice-title { color: var(--text-label); }
     .choice input:focus-visible ~ .box { box-shadow: 0 0 0 3px rgba(212,168,90,0.25); }
-    .choice-text { display: flex; flex-direction: column; gap: 0.2rem; }
-    .choice-title { font-size: 0.9375rem; font-weight: 500; color: var(--text-body-light); }
-    .choice-sub { font-size: 0.75rem; color: var(--text-body-secondary); line-height: 1.45; }
 
-    /* inline "other" + flexible reveal */
+    /* inline "other" reveal */
     .reveal { margin-top: 0.85rem; display: none; }
     .reveal.show { display: block; animation: drop 200ms ease; }
     @keyframes drop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 
     /* flexible-timeline toggle */
     .toggle-line {
-      display: flex; align-items: center; gap: 0.6rem;
-      margin-top: 0.85rem; font-size: 0.8125rem; color: var(--text-body-light);
+      display: flex; align-items: center; gap: 0.625rem;
+      margin-top: 0.125rem; font-size: 0.8125rem; color: var(--text-muted);
       cursor: pointer; user-select: none;
     }
     .toggle-line input { position: absolute; opacity: 0; width: 0; height: 0; }
     .toggle-line .box {
-      width: 1.05rem; height: 1.05rem; border: 1px solid var(--form-border-hover);
-      border-radius: 3px; background: var(--form-bg-page);
-      display: grid; place-items: center;
+      width: 1.0625rem; height: 1.0625rem; border: 1px solid var(--border-checkbox);
+      border-radius: 3px; background: var(--brand-primary);
+      display: grid; place-items: center; flex: 0 0 auto;
     }
     .toggle-line .box::after {
       content: ""; width: 0.5rem; height: 0.28rem;
-      border-left: 2px solid var(--form-text-on-gold); border-bottom: 2px solid var(--form-text-on-gold);
+      border-left: 2px solid var(--brand-primary); border-bottom: 2px solid var(--brand-primary);
       transform: rotate(-45deg) scale(0); transition: transform 140ms ease;
     }
-    .toggle-line input:checked ~ .box { background: var(--form-action-primary); border-color: var(--form-action-primary); }
+    .toggle-line input:checked ~ .box { background: var(--gold); border-color: var(--gold); }
     .toggle-line input:checked ~ .box::after { transform: rotate(-45deg) scale(1); }
 
     /* ============================= */
@@ -321,57 +270,54 @@
     }
     .field.invalid .field-error { display: block; }
     .field.invalid input, .field.invalid select, .field.invalid textarea { border-color: var(--error); }
-    .field.invalid .choice-grid .choice { border-color: var(--error); }
+    .field.invalid .choice .box { border-color: var(--error); }
 
     /* ============================= */
-    /* SUBMIT                        */
+    /* TAIL (submit + colophon)      */
     /* ============================= */
-    .actions {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem;
-      padding-top: 1rem; border-top: 1px solid var(--form-border-default);
+    .tail {
+      display: flex; flex-direction: column; gap: 1.75rem; /* 28px */
+      padding-top: 1.25rem;
     }
     button.submit {
+      width: 100%;
       font-family: var(--font-body);
       font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--btn-primary-fg);
-      background: var(--btn-primary-bg);
-      border: 0; border-radius: 4px;
-      padding: 1.05rem 2.5rem;
+      color: var(--brand-primary);
+      background: var(--gold);
+      border: 0; border-radius: 0;
+      padding: 1.125rem 2.5rem; /* 18px 40px */
       cursor: pointer;
       transition: background 160ms ease, transform 120ms ease, box-shadow 160ms ease;
-      box-shadow: 0 10px 30px -12px rgba(212,168,90,0.5);
     }
-    button.submit:hover { background: var(--btn-primary-bg-hover); transform: translateY(-1px); }
-    button.submit:active { background: var(--btn-primary-bg-active); transform: translateY(0); }
-    button.submit:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--form-bg-page), 0 0 0 5px var(--form-action-primary); }
-    .actions .note { font-size: 0.75rem; color: var(--text-body-muted); max-width: 26ch; }
+    button.submit:hover { background: var(--gold-light); }
+    button.submit:active { background: var(--gold-active); }
+    button.submit:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--brand-primary), 0 0 0 4px var(--gold); }
 
     .form-status {
-      display: none; margin-top: 1.5rem; padding: 1rem 1.15rem;
-      border: 1px solid var(--form-action-primary); border-radius: 4px;
-      background: rgba(212,168,90,0.06); color: var(--text-body-light); font-size: 0.8125rem;
+      display: none; padding: 1rem 1.15rem;
+      border: 1px solid var(--gold); border-radius: 4px;
+      background: rgba(212,168,90,0.06); color: var(--text-body); font-size: 0.8125rem;
     }
     .form-status.show { display: block; }
     .form-status.error { border-color: var(--error); background: rgba(224,121,106,0.07); }
 
-    footer.colophon {
-      margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--form-border-default);
-      font-size: 0.75rem; color: var(--text-body-muted); display: flex;
-      flex-wrap: wrap; gap: 0.5rem 1.25rem; justify-content: space-between;
+    .colophon-group { display: flex; flex-direction: column; gap: 1rem; }
+    .divider { height: 1px; background: var(--border-default); width: 100%; }
+    .colophon {
+      display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem;
+      justify-content: space-between; align-items: center;
+      font-size: 0.75rem;
     }
-    footer.colophon a { color: var(--link-fg); text-decoration: none; }
-    footer.colophon a:hover { color: var(--link-fg-hover); }
+    .colophon .name { color: var(--text-muted); }
+    .colophon a { color: var(--text-label); font-weight: 500; text-decoration: none; }
+    .colophon a:hover { color: var(--gold); }
 
     /* ============================= */
     /* RESPONSIVE                    */
     /* ============================= */
     @media (max-width: 600px) {
-      .grid { grid-template-columns: 1fr; gap: 0; }
-      .grid .field { margin-bottom: 1.25rem; }
-      legend { font-size: 1.3rem; }
-      .actions { flex-direction: column; align-items: stretch; }
-      button.submit { width: 100%; }
-      .actions .note { max-width: none; text-align: center; }
+      .row { grid-template-columns: 1fr; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -381,179 +327,223 @@
 </head>
 <body>
   <main class="page">
+    <div class="logo-block">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Lindsay Dev Creative">
+          <path d="M32 0C14.3269 0 0 14.3269 0 32C0 49.6731 14.3269 64 32 64C49.6731 64 64 49.6731 64 32C64 14.3269 49.6731 0 32 0ZM53.9675 53.9675C51.1141 56.8208 47.7915 59.0608 44.0923 60.6256C40.2629 62.2453 36.1941 63.0667 32 63.0667C27.8059 63.0667 23.7371 62.2453 19.9077 60.6256C16.2085 59.0608 12.8859 56.8208 10.0325 53.9675C7.1792 51.1141 4.9392 47.7915 3.3744 44.0923C1.75467 40.2629 0.933333 36.1941 0.933333 32C0.933333 27.8059 1.75467 23.7371 3.3744 19.9077C4.9392 16.2085 7.1792 12.8859 10.0325 10.0325C12.8859 7.1792 16.2085 4.9392 19.9077 3.3744C23.7371 1.75467 27.8059 0.933333 32 0.933333C36.1941 0.933333 40.2629 1.75467 44.0923 3.3744C47.7915 4.9392 51.1141 7.1792 53.9675 10.0325C56.8208 12.8859 59.0608 16.2085 60.6256 19.9077C62.2453 23.7371 63.0667 27.8059 63.0667 32C63.0667 36.1941 62.2453 40.2629 60.6256 44.0923C59.0608 47.7915 56.8208 51.1141 53.9675 53.9675Z" fill="currentColor"/>
+          <path d="M56.4331 36.744C56.4016 36.7403 56.3691 36.7381 56.3376 36.7381C55.936 36.7381 55.5968 37.0389 55.5488 37.4384C55.5232 37.6491 55.5819 37.8576 55.7125 38.0245C55.8437 38.1915 56.032 38.2976 56.2432 38.3232C56.2747 38.3269 56.3072 38.3291 56.3387 38.3291C56.7403 38.3291 57.0795 38.0283 57.1275 37.6288C57.1797 37.1936 56.8683 36.7968 56.4331 36.744ZM56.704 37.5776C56.6816 37.7648 56.5227 37.9019 56.3387 37.9019C56.3237 37.9019 56.3093 37.9008 56.2939 37.8992C56.0917 37.8747 55.9477 37.6912 55.9723 37.4891C55.9947 37.3019 56.1536 37.1648 56.3376 37.1648C56.3525 37.1648 56.3669 37.1659 56.3824 37.1675C56.5845 37.192 56.7285 37.3755 56.704 37.5776Z" fill="currentColor"/>
+          <path d="M8.28747 38.0245C8.41867 37.8576 8.4768 37.6491 8.4512 37.4384C8.4032 37.0395 8.064 36.7381 7.6624 36.7381C7.6304 36.7381 7.5984 36.7403 7.56693 36.744C7.35627 36.7696 7.16747 36.8752 7.03627 37.0427C6.90507 37.2096 6.84693 37.4181 6.87253 37.6288C6.92053 38.0277 7.25973 38.3291 7.66133 38.3291C7.69333 38.3291 7.72533 38.3269 7.7568 38.3232C7.96747 38.2976 8.15627 38.192 8.28747 38.0245ZM7.70613 37.8997C7.6912 37.9013 7.67627 37.9024 7.66133 37.9024C7.47733 37.9024 7.3184 37.7648 7.296 37.5781C7.27147 37.376 7.416 37.1925 7.6176 37.168C7.63253 37.1664 7.64747 37.1653 7.6624 37.1653C7.8464 37.1653 8.00533 37.3029 8.02773 37.4896C8.05227 37.6917 7.90773 37.8752 7.70613 37.8997Z" fill="currentColor"/>
+          <path d="M54.0592 43.1819L54.4891 43.3952C54.4971 43.3787 55.3227 41.7104 55.9792 39.7771L55.5248 39.6229C54.8789 41.5248 54.0677 43.1653 54.0592 43.1819Z" fill="currentColor"/>
+          <path d="M56.5915 30.2528C56.5936 30.2816 56.8277 33.136 56.4432 35.352L56.9163 35.4341C57.3115 33.1563 57.08 30.3317 57.0699 30.2123L56.5915 30.2528Z" fill="currentColor"/>
+          <path d="M8.0208 39.7776C8.67733 41.7109 9.5024 43.3787 9.51093 43.3957L9.9408 43.1824C9.9328 43.1659 9.12107 41.5253 8.4752 39.6235L8.0208 39.7776Z" fill="currentColor"/>
+          <path d="M7.55627 35.352C7.17173 33.136 7.40587 30.2811 7.408 30.2528L6.9296 30.2123C6.91947 30.3312 6.688 33.1563 7.0832 35.4341L7.55627 35.352Z" fill="currentColor"/>
+          <path d="M12.5419 22.0875L11.4416 21.6645L10.4667 24.2043L6.064 22.5141L5.61173 23.6933L11.1147 25.8059L12.5419 22.0875Z" fill="currentColor"/>
+          <path d="M8.85022 16.9425L8.18509 18.016L13.1958 21.1204L13.8609 20.0468L8.85022 16.9425Z" fill="currentColor"/>
+          <path d="M15.6165 17.6864L12.9216 15.0107L12.9392 14.9925L17.6635 15.6245L18.4464 14.8357L14.2635 10.6827L13.3915 11.5611L16.0805 14.2309L16.0565 14.2549L11.3445 13.6229L10.5552 14.4176L14.7381 18.5707L15.6165 17.6864Z" fill="currentColor"/>
+          <path d="M21.52 12.9771C22.0405 12.7003 22.4496 12.3339 22.7467 11.8768C23.0443 11.4197 23.2069 10.928 23.2352 10.4011C23.2635 9.87413 23.1525 9.37547 22.9019 8.90453C22.6491 8.4288 22.2965 8.05653 21.8453 7.78773C21.3941 7.51893 20.896 7.38027 20.3509 7.3712C19.8059 7.36213 19.2731 7.496 18.7525 7.7728L16.9088 8.75307L19.6757 13.9579L21.5195 12.9776L21.52 12.9771ZM19.2864 8.776C19.5989 8.61013 19.9157 8.53067 20.2373 8.5376C20.5589 8.54453 20.8549 8.632 21.1253 8.8C21.3957 8.968 21.6112 9.2032 21.7723 9.50507C21.9301 9.80267 22.0043 10.1115 21.9931 10.432C21.9819 10.7525 21.8885 11.0485 21.712 11.3205C21.5355 11.5925 21.2933 11.8101 20.9861 11.9733L20.2576 12.3605L18.5579 9.1632L19.2864 8.776Z" fill="currentColor"/>
+          <path d="M24.6763 7.9328C24.8981 8.12373 25.1403 8.25173 25.4027 8.31573C25.6651 8.37973 25.9963 8.432 26.3973 8.47307C26.7861 8.51093 27.0768 8.56267 27.2704 8.62773C27.4635 8.69333 27.5819 8.81867 27.624 9.0048C27.6651 9.1856 27.6187 9.36 27.4843 9.52907C27.3499 9.69813 27.1376 9.81547 26.848 9.8816C26.5632 9.94667 26.2933 9.94347 26.0384 9.872C25.7829 9.80053 25.5536 9.696 25.3493 9.5584L24.7499 10.4896C25 10.7035 25.3419 10.8629 25.7744 10.9685C26.2075 11.0741 26.6784 11.0688 27.1872 10.9525C27.6139 10.8549 27.9707 10.6901 28.2576 10.4576C28.5445 10.2251 28.744 9.9536 28.8576 9.64267C28.9707 9.33173 28.9915 9.0176 28.9189 8.70027C28.8352 8.33387 28.6821 8.0544 28.4603 7.86347C28.2379 7.67253 27.9957 7.54507 27.7339 7.48053C27.4715 7.41653 27.1403 7.36427 26.7392 7.3232C26.3451 7.2864 26.0512 7.23573 25.8576 7.17013C25.664 7.10507 25.5461 6.9792 25.504 6.79307C25.4667 6.6288 25.5072 6.47253 25.6261 6.3248C25.7451 6.17653 25.9387 6.072 26.2064 6.0112C26.4251 5.96107 26.6416 5.96373 26.856 6.01867C27.0699 6.0736 27.2544 6.14933 27.4091 6.2464L28.0085 5.3152C27.7968 5.14453 27.4981 5.01547 27.1125 4.928C26.7269 4.84053 26.3152 4.8464 25.8773 4.94667C25.4885 5.0352 25.1552 5.18773 24.8763 5.40373C24.5973 5.62027 24.3995 5.8768 24.2832 6.17387C24.1669 6.47093 24.1445 6.77867 24.2171 7.096C24.3008 7.46293 24.4539 7.74187 24.6757 7.9328H24.6763Z" fill="currentColor"/>
+          <path d="M31.6363 8.9312L33.9675 9.01227L34.4176 10.3589L35.7557 10.4053L33.6795 4.4352L32.2741 4.38667L29.7808 10.1984L31.1019 10.2443L31.6363 8.93173V8.9312ZM32.9029 5.6976L32.928 5.69867L33.6341 7.93067L32.0437 7.87573L32.9029 5.69813V5.6976Z" fill="currentColor"/>
+          <path d="M37.4736 10.9744L38.6864 11.3269L39.2624 9.34613L42.4107 6.27147L41.0443 5.87413L39.0533 7.92587L39.0208 7.91627L38.4165 5.10987L37.0336 4.70773L38.0496 8.99307L37.4736 10.9744Z" fill="currentColor"/>
+          <path d="M47.0165 15.7275C47.5525 15.8272 48.0693 15.7893 48.5669 15.6139C49.0645 15.4384 49.4827 15.1445 49.8219 14.7328C50.1648 14.3168 50.3733 13.8491 50.4491 13.3291C50.5243 12.8091 50.4619 12.296 50.2613 11.7888C50.0608 11.2816 49.7333 10.8405 49.2784 10.4661L47.6667 9.13813L43.9184 13.6875L45.5301 15.0155C45.9851 15.3904 46.4805 15.6277 47.0165 15.7275ZM47.9189 10.8187L48.5557 11.3435C48.8288 11.5685 49.0235 11.8309 49.1403 12.1307C49.2571 12.4304 49.2896 12.7376 49.2379 13.0512C49.1861 13.3653 49.0517 13.6544 48.8341 13.9189C48.6197 14.1787 48.3627 14.3653 48.0624 14.4779C47.7621 14.5904 47.4528 14.6176 47.1339 14.5584C46.8149 14.4992 46.5216 14.3595 46.2528 14.1381L45.616 13.6133L47.9184 10.8187H47.9189Z" fill="currentColor"/>
+          <path d="M51.2053 21.5877L52.1387 20.9397L50.3376 18.3456L51.4309 17.5872L52.7995 19.5584L53.6987 18.9339L52.3301 16.9627L53.312 16.2805L55.0651 18.8053L55.9989 18.1568L53.5253 14.5947L48.6837 17.9568L51.2053 21.5877Z" fill="currentColor"/>
+          <path d="M53.9216 24.456L53.9136 24.432L57.6005 21.5387L57.1611 20.2651L52.3003 24.2496L52.7589 25.5787L59.0427 25.7179L58.6171 24.4837L53.9216 24.456Z" fill="currentColor"/>
+          <path d="M15.0459 47.5216C15.1035 47.8112 15.1163 48.1099 15.0843 48.4176L16.2085 48.6005C16.2816 48.2011 16.2715 47.7648 16.1771 47.2923C16.0827 46.8197 15.8565 46.3632 15.4992 45.9227C15.1205 45.456 14.6715 45.1195 14.1525 44.9115C13.6331 44.704 13.1029 44.6405 12.5616 44.7221C12.0203 44.8037 11.5317 45.0213 11.096 45.3749C10.6603 45.7285 10.3477 46.1611 10.1589 46.6725C9.97013 47.1835 9.92267 47.7157 10.0171 48.2683C10.1115 48.8208 10.3477 49.3301 10.7264 49.7968C11.0837 50.2368 11.488 50.5541 11.9387 50.7488C12.3893 50.9435 12.8256 51.0464 13.2475 51.0587L13.2944 49.9141C12.9739 49.8848 12.6768 49.8101 12.4016 49.6896C12.1264 49.5691 11.8688 49.3611 11.6283 49.0645C11.4053 48.7899 11.2667 48.4853 11.2112 48.1504C11.1563 47.8155 11.1888 47.4907 11.3093 47.176C11.4299 46.8613 11.6272 46.5925 11.9019 46.3696C12.1765 46.1467 12.4811 46.008 12.816 45.9525C13.1509 45.8971 13.4768 45.9312 13.7931 46.0539C14.1093 46.1765 14.3792 46.3755 14.6021 46.6496C14.8389 46.9413 14.9867 47.2325 15.0443 47.5216H15.0459Z" fill="currentColor"/>
+          <path d="M19.9472 50.0656L17.8027 48.5771L14.4411 53.4192L15.4789 54.1397L16.6315 52.4795L17.5723 53.1328L17.312 55.4123L18.4395 56.1952L18.6789 53.6347C19.0389 53.6864 19.3829 53.6416 19.7104 53.4997C20.0379 53.3579 20.3088 53.1328 20.5232 52.8235C20.7312 52.5237 20.848 52.2032 20.8731 51.8619C20.8981 51.5205 20.8309 51.192 20.6709 50.8757C20.5109 50.56 20.2699 50.2896 19.9467 50.0656H19.9472ZM19.4859 52.1029C19.3547 52.2923 19.1824 52.4048 18.9691 52.4411C18.7557 52.4773 18.5499 52.4267 18.352 52.2891L17.28 51.5445L18.1925 50.2304L19.2645 50.9749C19.4629 51.1125 19.5819 51.2875 19.6224 51.5003C19.6629 51.7125 19.6171 51.9136 19.4859 52.1024V52.1029Z" fill="currentColor"/>
+          <path d="M20.9237 57.376L25.0949 58.8405L25.4715 57.768L22.4923 56.7216L22.9328 55.4667L25.1973 56.2619L25.56 55.2288L23.2955 54.4336L23.6917 53.3056L26.592 54.3237L26.9685 53.2512L22.8768 51.8144L20.9237 57.376Z" fill="currentColor"/>
+          <path d="M30.0267 53.6341L27.3995 59.3867L28.7195 59.4629L29.2837 58.1627L31.6123 58.2971L32.0315 59.6539L33.368 59.7312L31.4299 53.7147L30.0261 53.6336L30.0267 53.6341ZM29.7152 57.1168L30.6245 54.9595L30.6496 54.9611L31.304 57.2091L29.7152 57.1173V57.1168Z" fill="currentColor"/>
+          <path d="M38.1296 52.9664L33.5285 53.784L33.7349 54.9451L35.4176 54.6459L36.2432 59.2885L37.4869 59.0672L36.6613 54.4245L38.336 54.1269L38.1296 52.9664Z" fill="currentColor"/>
+          <path d="M40.3742 52.048L39.1953 52.501L41.3096 58.0032L42.4885 57.5502L40.3742 52.048Z" fill="currentColor"/>
+          <path d="M45.1781 49.328L46.296 53.8885L46.2752 53.9019L42.5696 51.032L41.4416 51.7691L46.4912 55.5109L47.6688 54.7419L46.2709 48.6144L45.1781 49.328Z" fill="currentColor"/>
+          <path d="M51.2981 50.1328L50.3024 49.2507L51.8939 47.4544L51.0747 46.7285L49.4832 48.5243L48.5883 47.7312L50.6267 45.4309L49.776 44.6773L46.8997 47.9227L51.3109 51.8325L54.2432 48.5237L53.3925 47.7701L51.2981 50.1328Z" fill="currentColor"/>
+          <path d="M32 13.512C27.0619 13.512 22.4192 15.4352 18.9269 18.9269C15.4352 22.4187 13.512 27.0613 13.512 32C13.512 36.9387 15.4352 41.5808 18.9269 45.0731C22.4187 48.5648 27.0613 50.488 32 50.488C36.9387 50.488 41.5808 48.5648 45.0731 45.0731C48.5653 41.5813 50.488 36.9387 50.488 32C50.488 27.0613 48.5648 22.4192 45.0731 18.9269C41.5813 15.4347 36.9387 13.512 32 13.512ZM33.32 49.6901C32.8827 49.7221 32.4427 49.7381 32 49.7381C31.3936 49.7381 30.7915 49.7077 30.1952 49.648V45.1579H33.32V49.6901ZM32.6208 44.5259V44.5221H30.1771C30.0427 43.3147 29.1093 39.6672 22.9749 36.5669C23.8277 36.1632 25.1861 35.3541 26.6176 33.8395C29.1552 31.1541 30.5904 27.6507 31.3963 24.3552V33.4469C30.6261 33.6304 30.0528 34.3205 30.0528 35.1467C30.0528 36.1125 30.8357 36.8955 31.8016 36.8955C32.7675 36.8955 33.5504 36.1125 33.5504 35.1467C33.5504 34.3205 32.9771 33.6299 32.2069 33.4469V24.3669C33.3824 29.1637 35.3531 32.112 36.9856 33.8395C38.4165 35.3541 39.7755 36.1632 40.6283 36.5669C34.4811 39.6715 33.4917 43.3275 33.3365 44.5275L32.6203 44.5259H32.6208ZM31.8016 34.2085C32.3184 34.2085 32.7392 34.6293 32.7392 35.1461C32.7392 35.6629 32.3184 36.0837 31.8016 36.0837C31.2848 36.0837 30.864 35.6629 30.864 35.1461C30.864 34.6293 31.2848 34.2085 31.8016 34.2085ZM49.7381 32C49.7381 34.3952 49.2693 36.7179 48.3445 38.9045C47.4512 41.0165 46.1723 42.9136 44.5429 44.5429C42.9136 46.1723 41.0165 47.4512 38.9045 48.3445C37.3728 48.9925 35.7739 49.4155 34.1307 49.6117L34.1259 44.8091C34.1248 44.7664 34.1744 40.4629 41.8629 36.8981V36.1387C41.8427 36.1328 39.7035 35.5536 37.5339 33.2373C33.8896 29.3467 32.6299 23.3584 32.2128 19.2517H31.3973C30.9797 23.3584 29.7141 29.3467 26.0699 33.2373C23.9003 35.5536 21.76 36.1333 21.7408 36.1381V36.8976C29.4235 40.4592 29.3867 44.7595 29.3851 44.7995L29.384 49.5467C27.9109 49.3296 26.4763 48.928 25.0955 48.344C22.9835 47.4507 21.0864 46.1717 19.4571 44.5424C17.8277 42.9131 16.5488 41.016 15.6555 38.904C14.7307 36.7173 14.2619 34.3947 14.2619 31.9995C14.2619 29.6043 14.7307 27.2816 15.6555 25.0949C16.5488 22.9829 17.8277 21.0859 19.4571 19.4565C21.0864 17.8272 22.9835 16.5483 25.0955 15.6549C27.2821 14.7301 29.6048 14.2613 32 14.2613C34.3952 14.2613 36.7179 14.7301 38.9045 15.6549C41.0165 16.5483 42.9136 17.8272 44.5429 19.4565C46.1723 21.0859 47.4512 22.9829 48.3445 25.0949C49.2693 27.2816 49.7381 29.6043 49.7381 31.9995V32Z" fill="currentColor"/>
+        </svg>
+      </span>
+    </div>
+
     <header class="masthead">
-      <p class="eyebrow">Project Inquiry</p>
-      <h1 class="title">Let&rsquo;s build something <em>worth remembering.</em></h1>
-      <p class="lede text-lead">Tell us about you and your vision. The more you share, the sharper our first conversation will be.</p>
+      <h1 class="title">Inquiries</h1>
+      <p class="lede">The most successful projects start with understanding the <strong>people behind the business</strong>. Share your goals and vision, the more I know, the better the outcome.</p>
     </header>
 
     <form id="inquiryForm" novalidate>
-      <!-- 1. ABOUT YOU -->
-      <fieldset>
-        <legend><span class="num">01</span> About you</legend>
-        <div class="grid">
-          <div class="field">
-            <label class="lbl" for="firstName">First name <span class="req">*</span></label>
-            <input type="text" id="firstName" name="firstName" autocomplete="given-name" required />
-            <span class="field-error">Please enter your first name.</span>
-          </div>
-          <div class="field">
-            <label class="lbl" for="lastName">Last name <span class="req">*</span></label>
-            <input type="text" id="lastName" name="lastName" autocomplete="family-name" required />
-            <span class="field-error">Please enter your last name.</span>
-          </div>
-          <div class="field">
-            <label class="lbl" for="email">Email <span class="req">*</span></label>
-            <input type="email" id="email" name="email" autocomplete="email" placeholder="you@brand.com" required />
-            <span class="field-error">Please enter a valid email address.</span>
-          </div>
-          <div class="field">
-            <label class="lbl" for="phone">Phone number <span class="opt">Optional</span></label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(555) 000-0000" />
-          </div>
-          <div class="field">
-            <label class="lbl" for="contactMethod">Preferred method of contact <span class="req">*</span></label>
-            <select id="contactMethod" name="contactMethod" class="placeholder-shown" required>
-              <option value="" disabled selected hidden>Select one</option>
-              <option value="Email">Email</option>
-              <option value="Phone call">Phone call</option>
-              <option value="Text message">Text message</option>
-            </select>
-            <span class="field-error">Please choose how you&rsquo;d like to be contacted.</span>
-          </div>
-          <div class="field">
-            <label class="lbl" for="company">Company / Brand name <span class="req">*</span></label>
-            <input type="text" id="company" name="company" autocomplete="organization" required />
-            <span class="field-error">Please enter your company or brand name.</span>
-          </div>
-          <div class="field span-2">
-            <label class="lbl" for="website">Website <span class="opt">Optional</span></label>
-            <input type="url" id="website" name="website" autocomplete="url" placeholder="https://" />
-            <span class="hint">Have an existing site or socials? Drop the link.</span>
-          </div>
-        </div>
-      </fieldset>
-
-      <!-- 2. THE PROJECT -->
-      <fieldset>
-        <legend><span class="num">02</span> The project</legend>
-
+      <!-- name row -->
+      <div class="row">
         <div class="field">
-          <label class="lbl" for="projectDetails">Project details <span class="req">*</span></label>
-          <textarea id="projectDetails" name="projectDetails" placeholder="What are we building together? Give us the shape of it." required></textarea>
-          <span class="field-error">Please tell us a little about the project.</span>
-        </div>
-
-        <div class="field" id="serviceField">
-          <label class="lbl">Service needed <span class="req">*</span></label>
-          <span class="hint" style="margin-top:0;margin-bottom:0.7rem;">Select all that apply.</span>
-          <div class="choice-grid">
-            <label class="choice">
-              <input type="checkbox" name="service" value="Full Brand Identity (logo design, color palette & fonts)" data-premium="true" />
-              <span class="box" aria-hidden="true"></span>
-              <span class="choice-text">
-                <span class="choice-title">Full Brand Identity</span>
-                <span class="choice-sub">Logo design, color palette &amp; fonts</span>
-              </span>
-            </label>
-            <label class="choice">
-              <input type="checkbox" name="service" value="Website Development" data-premium="true" />
-              <span class="box" aria-hidden="true"></span>
-              <span class="choice-text">
-                <span class="choice-title">Website Development</span>
-                <span class="choice-sub">Design &amp; build of your site</span>
-              </span>
-            </label>
-            <label class="choice">
-              <input type="checkbox" name="service" value="Other" id="serviceOther" />
-              <span class="box" aria-hidden="true"></span>
-              <span class="choice-text">
-                <span class="choice-title">Other</span>
-                <span class="choice-sub">Something else in mind? Tell us below.</span>
-              </span>
-            </label>
-          </div>
-          <div class="reveal" id="serviceOtherReveal">
-            <input type="text" id="serviceOtherText" name="serviceOtherText" placeholder="Describe the service you need" />
-          </div>
-          <span class="field-error">Please select at least one service.</span>
-        </div>
-
-        <div class="field">
-          <label class="lbl" for="projectDescription">Project description <span class="req">*</span></label>
-          <textarea id="projectDescription" name="projectDescription" placeholder="Share your vision and goals — the feeling, the audience, where you want to go." required></textarea>
-          <span class="field-error">Please share your vision or goals.</span>
-        </div>
-
-        <div class="field">
-          <label class="lbl" for="deliverables">Deliverables <span class="req">*</span></label>
-          <textarea id="deliverables" name="deliverables" placeholder="Exactly what you need handed over at the end — e.g. logo files, brand guide, live website, source files." required></textarea>
-          <span class="field-error">Please list what you need delivered.</span>
-        </div>
-      </fieldset>
-
-      <!-- 3. SCOPE & TIMING -->
-      <fieldset>
-        <legend><span class="num">03</span> Scope &amp; timing</legend>
-        <div class="grid">
-          <div class="field">
-            <label class="lbl" for="deadline">Target deadline <span class="req">*</span></label>
-            <input type="date" id="deadline" name="deadline" required />
-            <label class="toggle-line">
-              <input type="checkbox" id="flexible" name="flexible" value="Flexible timeline" />
-              <span class="box" aria-hidden="true"></span>
-              <span>My timeline is flexible</span>
-            </label>
-            <span class="field-error">Please pick a target date or mark your timeline flexible.</span>
-          </div>
-          <div class="field">
-            <label class="lbl" for="budget">Budget range <span class="opt">Optional</span></label>
-            <select id="budget" name="budget" class="placeholder-shown">
-              <option value="" disabled selected hidden>Select a range</option>
-              <option value="Under $1,000" data-tier="entry">Under $1,000</option>
-              <option value="$1,000 – $3,000">$1,000 – $3,000</option>
-              <option value="$3,000 – $5,000">$3,000 – $5,000</option>
-              <option value="$5,000 – $10,000">$5,000 – $10,000</option>
-              <option value="$10,000+">$10,000+</option>
-            </select>
-            <span class="hint" id="budgetHint" style="display:none;">For brand identity &amp; website builds, projects start at $1,000.</span>
-          </div>
-        </div>
-      </fieldset>
-
-      <!-- 4. INSPIRATION -->
-      <fieldset>
-        <legend><span class="num">04</span> Inspiration &amp; referral</legend>
-        <div class="field">
-          <label class="lbl" for="inspiration">Inspiration links <span class="opt">Optional</span></label>
-          <textarea id="inspiration" name="inspiration" style="min-height:5.5rem;" placeholder="Mood boards, competitors, a Pinterest board — paste any URLs here."></textarea>
+          <label class="lbl" for="firstName">First name <span class="req">*</span></label>
+          <input type="text" id="firstName" name="firstName" autocomplete="given-name" required />
+          <span class="field-error">Please enter your first name.</span>
         </div>
         <div class="field">
-          <label class="lbl" for="referral">How did you hear about us? <span class="opt">Optional</span></label>
-          <select id="referral" name="referral" class="placeholder-shown">
-            <option value="" disabled selected hidden>Select one</option>
-            <option value="Referral">Referral</option>
-            <option value="Social media">Social media</option>
-            <option value="Online search">Online search</option>
-            <option value="Other">Other</option>
-          </select>
-          <div class="reveal" id="referralOtherReveal">
-            <input type="text" id="referralOtherText" name="referralOtherText" placeholder="Where did you find us?" />
-          </div>
+          <label class="lbl" for="lastName">Last name <span class="req">*</span></label>
+          <input type="text" id="lastName" name="lastName" autocomplete="family-name" required />
+          <span class="field-error">Please enter your last name.</span>
         </div>
-      </fieldset>
-
-      <div class="actions">
-        <button type="submit" class="submit">Send Inquiry</button>
-        <p class="note">This opens your email app with the details ready to send.</p>
       </div>
-      <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
-    </form>
 
-    <footer class="colophon">
-      <span>Lindsay Dev Creative</span>
-      <a href="mailto:lindsay@lindsaydevcreative.com">lindsay@lindsaydevcreative.com</a>
-    </footer>
+      <!-- email / phone row -->
+      <div class="row">
+        <div class="field">
+          <label class="lbl" for="email">Email <span class="req">*</span></label>
+          <input type="email" id="email" name="email" autocomplete="email" placeholder="you@brand.com" required />
+          <span class="field-error">Please enter a valid email address.</span>
+        </div>
+        <div class="field">
+          <label class="lbl" for="phone">Phone number</label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(555) 000-0000" />
+        </div>
+      </div>
+
+      <!-- contact method / company row -->
+      <div class="row">
+        <div class="field">
+          <label class="lbl" for="contactMethod">Preferred method of contact <span class="req">*</span></label>
+          <select id="contactMethod" name="contactMethod" class="placeholder-shown" required>
+            <option value="" disabled selected hidden>Select one</option>
+            <option value="Email">Email</option>
+            <option value="Phone call">Phone call</option>
+            <option value="Text message">Text message</option>
+          </select>
+          <span class="field-error">Please choose how you&rsquo;d like to be contacted.</span>
+        </div>
+        <div class="field">
+          <label class="lbl" for="company">Company / Brand name <span class="req">*</span></label>
+          <input type="text" id="company" name="company" autocomplete="organization" required />
+          <span class="field-error">Please enter your company or brand name.</span>
+        </div>
+      </div>
+
+      <!-- website -->
+      <div class="field">
+        <label class="lbl" for="website">Website</label>
+        <span class="hint">Have an existing website? Drop the link.</span>
+        <input type="url" id="website" name="website" autocomplete="url" placeholder="https://" />
+      </div>
+
+      <!-- social media -->
+      <div class="field">
+        <label class="lbl" for="social">Social Media</label>
+        <span class="hint">Have active profiles? Drop a link.</span>
+        <input type="url" id="social" name="social" placeholder="https://" />
+      </div>
+
+      <!-- project details -->
+      <div class="field">
+        <label class="lbl" for="projectDetails">Project details <span class="req">*</span></label>
+        <textarea class="t-details" id="projectDetails" name="projectDetails" placeholder="What are we building together? Give us the shape of it." required></textarea>
+        <span class="field-error">Please tell us a little about the project.</span>
+      </div>
+
+      <!-- service needed -->
+      <fieldset class="field" id="serviceField">
+        <legend class="lbl">Service needed <span class="req">*</span></legend>
+        <span class="hint" style="margin-bottom:0.4375rem;">Select all that apply.</span>
+        <div class="choice-wrap">
+          <label class="choice">
+            <input type="checkbox" name="service" value="Full Brand Identity" data-premium="true" />
+            <span class="box" aria-hidden="true"></span>
+            <span class="choice-title">Full Brand Identity</span>
+          </label>
+          <label class="choice">
+            <input type="checkbox" name="service" value="Logo Design" />
+            <span class="box" aria-hidden="true"></span>
+            <span class="choice-title">Logo Design</span>
+          </label>
+          <label class="choice">
+            <input type="checkbox" name="service" value="Website Development" data-premium="true" />
+            <span class="box" aria-hidden="true"></span>
+            <span class="choice-title">Website Development</span>
+          </label>
+          <label class="choice">
+            <input type="checkbox" name="service" value="Website Refresh" data-premium="true" />
+            <span class="box" aria-hidden="true"></span>
+            <span class="choice-title">Website Refresh</span>
+          </label>
+          <label class="choice">
+            <input type="checkbox" name="service" value="Other" id="serviceOther" />
+            <span class="box" aria-hidden="true"></span>
+            <span class="choice-title">Other</span>
+          </label>
+        </div>
+        <div class="reveal" id="serviceOtherReveal">
+          <input type="text" id="serviceOtherText" name="serviceOtherText" placeholder="Describe the service you need" />
+        </div>
+        <span class="field-error">Please select at least one service.</span>
+      </fieldset>
+
+      <!-- project description -->
+      <div class="field">
+        <label class="lbl" for="projectDescription">Project description <span class="req">*</span></label>
+        <textarea class="t-large" id="projectDescription" name="projectDescription" placeholder="Share your vision and goals — the feeling, the audience, where you want to go." required></textarea>
+        <span class="field-error">Please share your vision or goals.</span>
+      </div>
+
+      <!-- deliverables -->
+      <div class="field">
+        <label class="lbl" for="deliverables">Deliverables <span class="req">*</span></label>
+        <textarea class="t-large" id="deliverables" name="deliverables" placeholder="Exactly what you need handed over at the end — e.g. logo files, brand guide, live website, source files." required></textarea>
+        <span class="field-error">Please list what you need delivered.</span>
+      </div>
+
+      <!-- deadline / budget row -->
+      <div class="row">
+        <div class="field">
+          <label class="lbl" for="deadline">Target deadline <span class="req">*</span></label>
+          <input type="date" id="deadline" name="deadline" placeholder="mm / dd / yyyy" required />
+          <label class="toggle-line">
+            <input type="checkbox" id="flexible" name="flexible" value="Flexible timeline" />
+            <span class="box" aria-hidden="true"></span>
+            <span>My timeline is flexible</span>
+          </label>
+          <span class="field-error">Please pick a target date or mark your timeline flexible.</span>
+        </div>
+        <div class="field">
+          <label class="lbl" for="budget">Budget range <span class="opt">Optional</span></label>
+          <select id="budget" name="budget" class="placeholder-shown">
+            <option value="" disabled selected hidden>Select a range</option>
+            <option value="Under $1,000" data-tier="entry">Under $1,000</option>
+            <option value="$1,000 – $3,000">$1,000 – $3,000</option>
+            <option value="$3,000 – $5,000">$3,000 – $5,000</option>
+            <option value="$5,000 – $10,000">$5,000 – $10,000</option>
+            <option value="$10,000+">$10,000+</option>
+          </select>
+          <span class="hint" id="budgetHint" style="display:none;">For brand identity &amp; website builds, projects start at $1,000.</span>
+        </div>
+      </div>
+
+      <!-- inspiration -->
+      <div class="field">
+        <label class="lbl" for="inspiration">Inspiration links <span class="opt">Optional</span></label>
+        <textarea class="t-small" id="inspiration" name="inspiration" placeholder="Mood boards, competitors, a Pinterest board — paste any URLs here."></textarea>
+      </div>
+
+      <!-- referral -->
+      <div class="field">
+        <label class="lbl" for="referral">How did you hear about us? <span class="opt">Optional</span></label>
+        <select id="referral" name="referral" class="placeholder-shown">
+          <option value="" disabled selected hidden>Select one</option>
+          <option value="Referral">Referral</option>
+          <option value="Social media">Social media</option>
+          <option value="Online search">Online search</option>
+          <option value="Other">Other</option>
+        </select>
+        <div class="reveal" id="referralOtherReveal">
+          <input type="text" id="referralOtherText" name="referralOtherText" placeholder="Where did you find us?" />
+        </div>
+      </div>
+
+      <!-- tail: submit + colophon -->
+      <div class="tail">
+        <button type="submit" class="submit">Send Inquiry</button>
+        <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+        <div class="colophon-group">
+          <div class="divider" aria-hidden="true"></div>
+          <div class="colophon">
+            <span class="name">Lindsay Dev Creative</span>
+            <a href="mailto:lindsay@lindsaydevcreative.com">lindsay@lindsaydevcreative.com</a>
+          </div>
+        </div>
+      </div>
+    </form>
   </main>
 
   <script>
@@ -704,6 +694,7 @@
           line("Preferred contact", g("contactMethod")) +
           line("Company / Brand", g("company")) +
           line("Website", g("website")) +
+          line("Social media", g("social")) +
           "\n— Project —\n" +
           line("Services", services) +
           line("Project details", g("projectDetails")) +
